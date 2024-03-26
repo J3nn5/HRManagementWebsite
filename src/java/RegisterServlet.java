@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     @Override
@@ -29,6 +29,29 @@ public class RegisterServlet extends HttpServlet {
             MongoClient mongo = new MongoClient("localhost", 27017);
             DB db1 = mongo.getDB("my_database");
             DBCollection col = db1.getCollection("Users");
+            
+            // Check user
+            BasicDBObject mail = new BasicDBObject("Email", email);
+            DBCursor cursor1 = col.find(mail);
+            BasicDBObject phone = new BasicDBObject("Phone Number", mobile);
+            DBCursor cursor2 = col.find(phone);
+            
+            if (cursor1.hasNext()) {
+                pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
+                pw.println("<h2 class='bg-danger text-light text-center'>Email already exists!</h2>");
+                pw.println("</div>");
+                pw.println("<a href='home.html'><button class='btn btn-outline-primary'>Home</button></a>");
+                pw.close();
+                return;   
+            }
+            if (cursor2.hasNext()) {
+                pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
+                pw.println("<h2 class='bg-danger text-light text-center'>Phone already exists!</h2>");
+                pw.println("</div>");
+                pw.println("<a href='home.html'><button class='btn btn-outline-primary'>Home</button></a>");
+                pw.close();
+                return; 
+            }
             
             // Hash the password
             String hashedPassword = hashPassword(password);

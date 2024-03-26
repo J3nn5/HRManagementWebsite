@@ -8,8 +8,9 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
+import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/login")
+//@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
     @Override
@@ -33,8 +34,12 @@ public class LoginServlet extends HttpServlet {
                 DBObject user = cursor.next();
                 String storedPassword = (String) user.get("Password");
                 if (storedPassword.equals(hashPassword(password))) {
-                    out.println("<h2>Login Successful!</h2>");
+//                    out.println("<h2>Login Successful!</h2>");
                     // You can redirect to a dashboard or another page upon successful login
+                    
+                    HttpSession session = req.getSession();
+                    session.setAttribute("user", user);
+                    resp.sendRedirect("admin.jsp");
                 } else {
                     out.println("<h2>Login Failed. Incorrect email or password.</h2>");
                 }

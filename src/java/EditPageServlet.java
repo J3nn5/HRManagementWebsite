@@ -15,7 +15,7 @@ import jakarta.servlet.ServletException;
  *
  * @author MSI PC
  */
-@WebServlet("/editpage")
+//@WebServlet("/editpage")
 public class EditPageServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
