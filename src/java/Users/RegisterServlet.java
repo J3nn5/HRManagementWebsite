@@ -1,3 +1,5 @@
+package Users;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,11 +21,13 @@ public class RegisterServlet extends HttpServlet {
         pw.println("<link rel='stylesheet' href='css/bootstrap.css'>");
         String name = req.getParameter("userName");
         String email = req.getParameter("email");
+        String password = req.getParameter("psswd"); 
+        String department = req.getParameter("department"); 
+        String position = req.getParameter("position");
         String dob = req.getParameter("dob");
         String mobile = req.getParameter("phoneNumber");
         String city = req.getParameter("city");
         String gender = req.getParameter("gender");
-        String password = req.getParameter("psswd"); 
         
         try {
             MongoClient mongo = new MongoClient("localhost", 27017);
@@ -40,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
                 pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
                 pw.println("<h2 class='bg-danger text-light text-center'>Email already exists!</h2>");
                 pw.println("</div>");
-                pw.println("<a href='home.html'><button class='btn btn-outline-primary'>Home</button></a>");
+                pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
                 pw.close();
                 return;   
             }
@@ -48,7 +52,7 @@ public class RegisterServlet extends HttpServlet {
                 pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
                 pw.println("<h2 class='bg-danger text-light text-center'>Phone already exists!</h2>");
                 pw.println("</div>");
-                pw.println("<a href='home.html'><button class='btn btn-outline-primary'>Home</button></a>");
+                pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
                 pw.close();
                 return; 
             }
@@ -59,11 +63,13 @@ public class RegisterServlet extends HttpServlet {
             BasicDBObject document = new BasicDBObject();
             document.put("Name", name);
             document.put("Email", email);
+            document.put("Password", hashedPassword); 
+            document.put("Department", department); 
+            document.put("Position", position);
             document.put("DOB", dob);
             document.put("Phone Number", mobile);
             document.put("Gender", gender);
             document.put("City", city);
-            document.put("Password", hashedPassword); 
             
             
             col.insert(document);
@@ -75,7 +81,7 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
             pw.println("<h2>Registration Failed!</h2>");
         }
-        pw.println("<a href='home.html'><button class='btn btn-outline-primary'>Home</button></a>");
+        pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
         pw.println("</div>");
         pw.close();
     }

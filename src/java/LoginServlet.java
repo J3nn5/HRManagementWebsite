@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
                     
                     HttpSession session = req.getSession();
                     session.setAttribute("user", user);
-                    resp.sendRedirect("admin.jsp");
+                    resp.sendRedirect("admin/admin.jsp");
                 } else {
                     out.println("<h2>Login Failed. Incorrect email or password.</h2>");
                 }

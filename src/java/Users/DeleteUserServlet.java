@@ -1,3 +1,9 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package Users;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,50 +14,48 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author MAI_PHUONG
  */
-//@WebServlet("/addtask")
-public class AddProjectServlet extends HttpServlet {
+public class DeleteUserServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            String title = req.getParameter("title");
-            String document = req.getParameter("document");
-            String note = req.getParameter("note");
-            String time = req.getParameter("time");
             
             try {
+                String userId = req.getParameter("userId");
+                ObjectId _id = new ObjectId(userId);
+                BasicDBObject query = new BasicDBObject("_id", _id);
+                
                 MongoClient mongo = new MongoClient("localhost", 27017);
-                DB dbl = mongo.getDB("my_database");
-                DBCollection col = dbl.getCollection("Projects");
+                DB db = mongo.getDB("my_database");
+                DBCollection col = db.getCollection("Users");
+                DBCursor cursor = col.find(query);
+                BasicDBObject document = (BasicDBObject) cursor.next();
+                String user = document.getString("Name");
                 
-                BasicDBObject data = new BasicDBObject();
-                data.put("Title", title);
-                data.put("Document", document);
-                data.put("Note", note);
-                data.put("Time", time);
-                data.put("User", "");
-                data.put("Status", "");
-                
-                col.insert(data);
-                
-                out.println("Successful");
+                col.remove(query);
                 mongo.close();
+                out.print("<h2>Deteted " + user + "</h2>");  
+
             }
             catch(Exception e) {
-                out.println("Failed" + e);
+                out.println("Fail !!");
             }
-            
-            out.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
-            out.println("</div>");
-            out.close();
         }
     }
 

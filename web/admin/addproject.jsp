@@ -1,31 +1,20 @@
 <%-- 
-    Document   : admin
-    Created on : Mar 26, 2024, 10:12:22 AM
+    Document   : addproject
+    Created on : Mar 27, 2024, 11:59:40 AM
     Author     : MAI_PHUONG
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "com.mongodb.*;" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Add Project</title>
     </head>
-    <body
-        <div>
-            <%
-                DBObject user = (DBObject) session.getAttribute("user");
-                String username = (String) user.get("Name");
-            %>
-            <h2><%= username%></h2>
-        </div>
-        <div>
-            <a href="showdata" class = "btn btn-outline-primary d-block">Show Staffs</a>
-        </div>
+    <body>
         <div>
             <form action="addproject" method="post" class = "form-group" id="frm">
-                <h2 class="bg-danger text-white card-header"> AddTask Form </h2>
+                <h2 class="bg-danger text-white card-header"> Add Project Form </h2>
                 <table>
                     <tr>
                         <td>Title</td>
