@@ -16,7 +16,7 @@
 => Need to add Decorations and necessary navigations features
 2. *login.html*
 => Add Decorations (optional)
-3. **Admin**
+**Admin**
 - *addProject.jsp* (finished - first ver)
 - *adminDashboard.jsp* (in progress)
 - *register.html* (finished)
