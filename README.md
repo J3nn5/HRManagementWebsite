@@ -22,18 +22,18 @@
 - *register.html* (finished)
 - *updateStaff.jsp* (in progress)
 **Source Packges**
-A. **Default package**
+**Default package**
 1. *editPageServlet.java* (finished)
 => Show the edit page for editorial
 2. *LoginServlet.java* (finished)
 => For processing logins
 3. *editServlet.java* (newly added)
 => Process edited informations and update it on the Database
-B. **Projects**
+**Projects**
 1. *AddProjectServlet.java*
 => Add new project for the designated department
 => Update projects
-C. **Users**
+**Users**
 1. *deleteStaffServlet.java*
 => Process Delete function for the designated Staffs 
 2.  *registerServlet.java*
@@ -44,5 +44,3 @@ C. **Users**
 => Process the "Update Personal Profile for Staff" function 
 5. *dbConn.java* (newly added)
 => Database Connection function
-
-
