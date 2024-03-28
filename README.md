@@ -16,12 +16,15 @@
 => Need to add Decorations and necessary navigations features
 2. *login.html*
 => Add Decorations (optional)
+
 **Admin**
 - *addProject.jsp* (finished - first ver)
 - *adminDashboard.jsp* (in progress)
 - *register.html* (finished)
 - *updateStaff.jsp* (in progress)
+
 **Source Packges**
+
 **Default package**
 1. *editPageServlet.java* (finished)
 => Show the edit page for editorial
@@ -29,10 +32,12 @@
 => For processing logins
 3. *editServlet.java* (newly added)
 => Process edited informations and update it on the Database
+
 **Projects**
 1. *AddProjectServlet.java*
 => Add new project for the designated department
 => Update projects
+
 **Users**
 1. *deleteStaffServlet.java*
 => Process Delete function for the designated Staffs 
