@@ -11,8 +11,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
 
-//@WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+
+@WebServlet("/register")
+public class registerServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,8 +31,9 @@ public class RegisterServlet extends HttpServlet {
         String gender = req.getParameter("gender");
         
         try {
-            MongoClient mongo = new MongoClient("localhost", 27017);
-            DB db1 = mongo.getDB("my_database");
+//            MongoClient mongo = new MongoClient("localhost", 27017);
+//            DB db1 = mongo.getDB("my_database");
+            DB db1 = DBConn.getConn();
             DBCollection col = db1.getCollection("Users");
             
             // Check user
@@ -76,12 +78,12 @@ public class RegisterServlet extends HttpServlet {
             
             pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
             pw.println("<h2 class='bg-success text-light text-center'>Registration Successful!</h2>");
-            mongo.close();
+            // mongo.close();
         } catch (Exception e) {
             e.printStackTrace();
             pw.println("<h2>Registration Failed!</h2>");
         }
-        pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
+        pw.println("<a href='login.html'><button class='btn btn-outline-primary'>Home</button></a>");
         pw.println("</div>");
         pw.close();
     }

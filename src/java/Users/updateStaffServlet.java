@@ -22,7 +22,8 @@ import org.bson.types.ObjectId;
  *
  * @author MAI_PHUONG
  */
-public class UpdateUserServlet extends HttpServlet {
+// @WebServlet("/UpdateUserServlet")
+public class updateStaffServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
@@ -41,6 +42,7 @@ public class UpdateUserServlet extends HttpServlet {
                 String name = req.getParameter("userName");
                 String email = req.getParameter("email");
                 String password = req.getParameter("psswd");
+                String phoneNumber =req.getParameter("phoneNumber");
                 String department = req.getParameter("department");
                 String position = req.getParameter("position");
                 
@@ -50,6 +52,7 @@ public class UpdateUserServlet extends HttpServlet {
                 update.put("Name", name);
                 update.put("Email", email);
                 update.put("Password", hashedPassword);
+                update.put("Phone Number", phoneNumber);
                 update.put("Department", department);
                 update.put("Position", position);
                 
@@ -101,11 +104,7 @@ public class UpdateUserServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-        
+
     // Ham hash
     private String hashPassword(String password) {
         try {

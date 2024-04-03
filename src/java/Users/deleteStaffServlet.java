@@ -20,7 +20,7 @@ import org.bson.types.ObjectId;
  *
  * @author MAI_PHUONG
  */
-public class DeleteUserServlet extends HttpServlet {
+public class deleteStaffServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

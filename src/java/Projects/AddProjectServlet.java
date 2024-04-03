@@ -16,13 +16,13 @@ import com.mongodb.*;
  * @author MAI_PHUONG
  */
 //@WebServlet("/addtask")
-public class AddProjectServlet extends HttpServlet {
+public class addProjectServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+           
             
             String title = req.getParameter("title");
             String document = req.getParameter("document");

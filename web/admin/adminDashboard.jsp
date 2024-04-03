@@ -33,7 +33,7 @@
         
         <!-- Add Project -->
         <div>
-            <a href="addproject.jsp" class = "btn btn-outline-primary d-block">Add Project</a>
+            <a href="addProject.jsp" class = "btn btn-outline-primary d-block">Add Project</a>
         </div>
         
     </body>

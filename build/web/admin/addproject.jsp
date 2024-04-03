@@ -2,6 +2,7 @@
     Document   : addproject
     Created on : Mar 27, 2024, 11:59:40 AM
     Author     : MAI_PHUONG
+    Edit by    : Jun
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,10 +11,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Project</title>
+        <link rel="stylesheet" href=""
     </head>
     <body>
         <div>
-            <form action="addproject" method="post" class = "form-group" id="frm">
+            <form action="addProject" method="post" class = "form-group" id="frm">
                 <h2 class="bg-danger text-white card-header"> Add Project Form </h2>
                 <table>
                     <tr>

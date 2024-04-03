@@ -11,7 +11,7 @@ import com.mongodb.*;
 import jakarta.servlet.http.HttpSession;
 
 //@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+public class loginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

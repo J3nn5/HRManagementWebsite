@@ -8,7 +8,7 @@ package Users;
 
 /**
  *
- * @author MSI PC
+ * @author LAM ANH
  */
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //@WebServlet("/showuser")
-public class ShowUserServlet extends HttpServlet {
+public class showStaffServlet extends HttpServlet {
      @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter pw = resp.getWriter();
@@ -70,7 +70,7 @@ public class ShowUserServlet extends HttpServlet {
                 pw.println("<td>" + document.getString("City") + "</td>");
                 
                 pw.println("<td>");
-                pw.println("<form action='updateuser.jsp' method='post'>");
+                pw.println("<form action='../admin/updateuser.jsp' method='post'>");
                 pw.println("<input type='hidden' name='userId' value='" + document.getObjectId("_id") + "'>");
                 pw.println("<input type='submit' value='Update'>");
                 pw.println("</form>");
