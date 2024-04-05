@@ -1,5 +1,6 @@
 package Users;
 
+import Database.DBConn;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,10 +11,10 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
+import Database.DBConn;
 
-
-@WebServlet("/register")
-public class registerServlet extends HttpServlet {
+//@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,7 +47,7 @@ public class registerServlet extends HttpServlet {
                 pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
                 pw.println("<h2 class='bg-danger text-light text-center'>Email already exists!</h2>");
                 pw.println("</div>");
-                pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
+                pw.println("<a href='adminDashboard.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
                 pw.close();
                 return;   
             }
@@ -54,7 +55,7 @@ public class registerServlet extends HttpServlet {
                 pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
                 pw.println("<h2 class='bg-danger text-light text-center'>Phone already exists!</h2>");
                 pw.println("</div>");
-                pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
+                pw.println("<a href='adminDashboard.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
                 pw.close();
                 return; 
             }
@@ -79,11 +80,12 @@ public class registerServlet extends HttpServlet {
             pw.println("<div class='card' style='margin:auto; width:300px; margin-top:100px'>");
             pw.println("<h2 class='bg-success text-light text-center'>Registration Successful!</h2>");
             // mongo.close();
+            DBConn.closeConn();
         } catch (Exception e) {
             e.printStackTrace();
             pw.println("<h2>Registration Failed!</h2>");
         }
-        pw.println("<a href='login.html'><button class='btn btn-outline-primary'>Home</button></a>");
+        pw.println("<a href='adminDashboard.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
         pw.println("</div>");
         pw.close();
     }

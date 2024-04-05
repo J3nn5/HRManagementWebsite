@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
+import Database.DBConn;
 import org.bson.types.ObjectId;
 
 
@@ -23,7 +24,7 @@ import org.bson.types.ObjectId;
  * @author MAI_PHUONG
  */
 // @WebServlet("/UpdateUserServlet")
-public class updateStaffServlet extends HttpServlet {
+public class UpdateStaffServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
@@ -33,8 +34,7 @@ public class updateStaffServlet extends HttpServlet {
                 ObjectId _id = new ObjectId(userId);
                 BasicDBObject query = new BasicDBObject("_id", _id);
 
-                MongoClient mongo = new MongoClient("localhost", 27017);
-                DB db = mongo.getDB("my_database");
+                DB db = DBConn.getConn();
                 DBCollection col = db.getCollection("Users");
                 DBCursor cursor = col.find(query);
                 BasicDBObject update = (BasicDBObject) cursor.next();
@@ -59,12 +59,18 @@ public class updateStaffServlet extends HttpServlet {
                 // Perform update query
                 BasicDBObject updateQuery = new BasicDBObject("$set", update);
                 col.update(query, updateQuery);
-                mongo.close();
-                out.println("<h2>Updated</h2>");
+                DBConn.closeConn();
+                
+                out.println("<script>");
+                out.println("   alert(\'Updated.\');");
+                out.println("   window.location.href = './showStaff';");
+                out.println("</script>");
             }
             catch(Exception e) {
-                e.printStackTrace();
-                out.println("<h2>Failed !!</h2>");
+                out.println("<script>");
+                out.println("   alert(\'Failed.\');");
+                out.println("   window.location.href = './showStaff';");
+                out.println("</script>");
             }
             out.close();
         }

@@ -1,8 +1,12 @@
+<%-- 
+    Document   : register
+    Created on : Apr 3, 2024, 2:53:03 PM
+    Author     : MAI_PHUONG
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import = "com.mongodb.*" %>
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
 <html>
     <head>
         <title>Register Page</title>
@@ -24,7 +28,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
     </head>
      <body class="container-fluid">
-        
+        <%
+            DBObject user = (DBObject) session.getAttribute("user");
+            if(user != null) {
+                String username = (String) user.get("Name");
+        %>
+         
         <form action="register" method="post" class = "form-group" id="frm">
             <marquee><h2 class="text-primary">This is da Register form</h2></marquee> 
             <h2 class="bg-danger text-white card-header"> Registration form </h2>
@@ -86,8 +95,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                      <td><a href="../login.html" class="btn btn-outline-danger">Login</a></td>
                 </tr>
             </table>
-            <a href="showuser" class = "btn btn-outline-primary d-block">Show Staffs</a>
+            <a href="showStaff" class = "btn btn-outline-primary d-block">Show Staffs</a>
         </form>
-            <a href='./admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>
+            <a href='./adminDashboard.jsp'><button class='btn btn-outline-primary'>Home</button></a>
+            
+        <%
+            } else {
+                response.sendRedirect("../index.html");
+            }
+        %>
     </body>
 </html>
+

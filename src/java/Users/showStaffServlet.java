@@ -10,6 +10,7 @@ package Users;
  *
  * @author LAM ANH
  */
+import Database.DBConn;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -25,7 +26,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //@WebServlet("/showuser")
-public class showStaffServlet extends HttpServlet {
+public class ShowStaffServlet extends HttpServlet {
      @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter pw = resp.getWriter();
@@ -40,8 +41,7 @@ public class showStaffServlet extends HttpServlet {
         pw.println("<body>");
 
         try {
-            MongoClient mongo = new MongoClient("localhost", 27017);
-            DB db = mongo.getDB("my_database");
+            DB db = DBConn.getConn();
             DBCollection col = db.getCollection("Users");
 
             // Find all documents in the collection
@@ -69,16 +69,30 @@ public class showStaffServlet extends HttpServlet {
                 pw.println("<td>" + document.getString("Gender") + "</td>");
                 pw.println("<td>" + document.getString("City") + "</td>");
                 
+                // Update
                 pw.println("<td>");
-                pw.println("<form action='../admin/updateuser.jsp' method='post'>");
+                pw.println("<form action='../admin/updateStaff.jsp' method='post'>");
                 pw.println("<input type='hidden' name='userId' value='" + document.getObjectId("_id") + "'>");
                 pw.println("<input type='submit' value='Update'>");
                 pw.println("</form>");
-                pw.println("<form action='../admin/deleteuser' method='post'>");
+                //Delete
+                pw.println("<form action='../admin/deleteStaff' method='post'>");
                 pw.println("<input type='hidden' name='userId' value='" + document.getObjectId("_id") + "'>");
-                pw.println("<input type='submit' value='Delete'>");
+                pw.println("<button onclick=\"return confirmDelete()\">Delete</button>");
                 pw.println("</form>");
                 pw.println("</td>");
+                
+                pw.println("<script>");
+                pw.println("function confirmDelete() {");
+                pw.println("    var result = confirm('Delete account " + document.getString("Name") + " ?');");
+                pw.println("    if (result) {");
+                pw.println("        return true;"); // Chuyển hướng nếu người dùng đồng ý
+                pw.println("    } else {");
+                pw.println("        return false;"); // Chuyển hướng nếu người dùng hủy
+                pw.println("    }");
+                pw.println("    return false;");
+                pw.println("}");
+                pw.println("</script>");
 
                 pw.println("</tr>");
             }
@@ -87,13 +101,13 @@ public class showStaffServlet extends HttpServlet {
             pw.println("</table>");
             pw.println("</div>");
 
-            mongo.close();
+            DBConn.closeConn();
         } catch (Exception e) {
             e.printStackTrace();
             pw.println("<h2>Error retrieving data from MongoDB!</h2>");
         }
 
-        pw.println("<a href='admin.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
+        pw.println("<a href='adminDashboard.jsp'><button class='btn btn-outline-primary'>Home</button></a>");
         pw.println("</body>");
         pw.println("</html>");
     }

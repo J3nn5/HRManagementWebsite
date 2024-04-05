@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "com.mongodb.*;" %>
+<%@page import = "com.mongodb.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,22 +13,24 @@
         <title>Admin Page</title>
     </head>
     <body
-        <div>
-            <%
-                DBObject user = (DBObject) session.getAttribute("user");
+        <%
+            DBObject user = (DBObject) session.getAttribute("user");
+            if(user != null) {
                 String username = (String) user.get("Name");
-            %>
-            <h2><%= username%></h2>
+        %>
+        
+        <div>
+            <h2><%= user.get("Name") %></h2>
         </div>
         
         <!-- Add User -->
         <div>
-            <a href="register.html" class = "btn btn-outline-primary d-block">Add User</a>
+            <a href="register.jsp" class = "btn btn-outline-primary d-block">Add User</a>
         </div>
         
         <!-- User -->
         <div>
-            <a href="showuser" class = "btn btn-outline-primary d-block">Show Staffs</a>
+            <a href="showStaff" class = "btn btn-outline-primary d-block">Show Staffs</a>
         </div>
         
         <!-- Add Project -->
@@ -36,5 +38,26 @@
             <a href="addProject.jsp" class = "btn btn-outline-primary d-block">Add Project</a>
         </div>
         
+        <!-- Logout -->
+        <div>
+            <button onclick="confirmLogout()">Logout</button>
+        </div>
+        
+        <%
+            } else {
+                response.sendRedirect("../index.html");
+            }
+        %>
     </body>
 </html>
+
+<script>
+    function confirmLogout() {
+        var result = confirm('Logout your account?');
+        if (result) {
+        window.location.href = 'logout'; // Chuyển hướng nếu người dùng đồng ý
+        } else {
+            window.location.href = 'adminDashboard.jsp'; // Chuyển hướng nếu người dùng hủy
+        }
+    }
+</script>

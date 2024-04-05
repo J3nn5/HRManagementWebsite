@@ -2,67 +2,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Users;
 
-import Database.DBConn;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import com.mongodb.*;
-import org.bson.types.ObjectId;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author MAI_PHUONG
  */
-public class DeleteStaffServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            
-            try {
-                String userId = req.getParameter("userId");
-                ObjectId _id = new ObjectId(userId);
-                BasicDBObject query = new BasicDBObject("_id", _id);
-                
-                DB db = DBConn.getConn();
-                DBCollection col = db.getCollection("Users");
-                DBCursor cursor = col.find(query);
-                BasicDBObject document = (BasicDBObject) cursor.next();
-                String user = document.getString("Name");
-                
-                col.remove(query);
-                DBConn.closeConn();
-                 
-                out.println("<script>");
-                out.println("   alert(\'Deleted " + user + ".\');");
-                out.println("   window.location.href = './showStaff';");
-                out.println("</script>");
-
+            HttpSession session = req.getSession(false); // Pass false to not create a new session if it doesn't exist
+            if (session != null) {
+                session.invalidate(); // Invalidate the session if it exists
             }
-            catch(Exception e) {
-                out.println("<script>");
-                out.println("   alert(\'Failed.\');");
-                out.println("   window.location.href = './showStaff';");
-                out.println("</script>");
-            }
+            resp.sendRedirect("../index.html");
         }
     }
 

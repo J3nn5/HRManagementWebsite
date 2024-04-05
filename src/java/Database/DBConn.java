@@ -1,5 +1,4 @@
-package Users;
-
+package Database;
 /**
  *
  * @author MAI_PHUONG
@@ -16,14 +15,12 @@ public class DBConn {
     private static DB db;
     
     public static DB getConn() {
-        if (db == null) {
-            try {
+        try {
                 mongo = new MongoClient(HOST, PORT);
                 db = mongo.getDB(DATABASE_NAME);
             }
-            catch(Exception e) {
-                System.out.println("ERROR: " + e);
-            }
+        catch(Exception e) {
+            System.out.println("ERROR: " + e);
         }
         return db;
     }

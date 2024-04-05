@@ -1,3 +1,4 @@
+import Database.DBConn;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,10 +9,11 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import com.mongodb.*;
+import com.mongodb.client.MongoDatabase;
 import jakarta.servlet.http.HttpSession;
 
 //@WebServlet("/login")
-public class loginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,8 +24,10 @@ public class loginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         try {
-            MongoClient mongo = new MongoClient("localhost", 27017);
-            DB db = mongo.getDB("my_database");
+//            MongoDatabase database = DBConn.connect();
+//            MongoClient mongo = new MongoClient("localhost", 27017);
+//            DB db = mongo.getDB("my_database");
+            DB db = DBConn.getConn();
             DBCollection col = db.getCollection("Users");
 
             BasicDBObject query = new BasicDBObject();
@@ -36,21 +40,26 @@ public class loginServlet extends HttpServlet {
                 if (storedPassword.equals(hashPassword(password))) {
 //                    out.println("<h2>Login Successful!</h2>");
                     // You can redirect to a dashboard or another page upon successful login
-                    
-                    HttpSession session = req.getSession();
+                    HttpSession session = req.getSession(true);
                     session.setAttribute("user", user);
-                    resp.sendRedirect("admin/admin.jsp");
+                    resp.sendRedirect("admin/adminDashboard.jsp");
                 } else {
-                    out.println("<h2>Login Failed. Incorrect email or password.</h2>");
+//                    resp.sendRedirect("login.html");
+                    out.println("<script>");
+                    out.println("   alert(\'Login Failed. Incorrect email or password.\');");
+                    out.println("   window.location.href = 'login.html';");
+                    out.println("</script>");
                 }
             } else {
-                out.println("<h2>Login Failed. User not found.</h2>");
+                out.println("<script>");
+                out.println("   alert(\'Login Failed. User not found.\');");
+                out.println("   window.location.href = 'login.html';");
+                out.println("</script>");
             }
 
-            mongo.close();
+            DBConn.closeConn();
         } catch (Exception e) {
-            e.printStackTrace();
-            out.println("<h2>Error occurred during login.</h2>");
+            resp.sendRedirect("index.html");
         }
     }
 
